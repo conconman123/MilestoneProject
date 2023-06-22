@@ -1,4 +1,4 @@
-let card = [
+let deck = [
     {
         name: '2S',
         cardBack: './deck-of-cards/Back7.png',
@@ -321,37 +321,43 @@ playerValue = 0
 dealerValue = 0
 
 //make dom elements
-let hitButton = document.getElementById('hit')
-let dealButton = document.getElementById('deal')
+
+let hitButton = document.getElementById('hitButton')
+let dealButton = document.getElementById('dealButton')
 let standButton = document.getElementById('stand')
 let resultDiv = document.getElementById('result')
 let playerHandDiv = document.getElementById('player-hand')
 let dealerHandDiv = document.getElementById('dealer-hand')
 
-hitButton.addEventListener('click', hit)
-dealButton.addEventListener('click', deal)
-standButton.addEventListener('click', stand)
 
-function createDeck(card){
-    let deck = [card.length]
-    for(let i = 0; i < card.length; i++){
-        deck[i] = card[i]
-    }
-    return deck
-}
+
+hitButton.addEventListener('click', hit)
+standButton.addEventListener('click', stand)
+dealButton.addEventListener('click', deal)
+
+
+
+// function createDeck(card){
+//     let deck = [card.length]
+//     for(let i = 0; i < card.length; i++){
+//         deck[i] = card[i]
+//     }
+//     return deck
+// }
 
 function drawCard(){
-    return deck.shift()
+    const temp = Math.floor(Math.random() * deck.length)
+    return deck.splice(temp, 1)[0]
 }
 
-function shuffle(deck) {
-    for(let i = 0; i < deck.length; i++){
-        let swapID = Math.trunc(Math.random() * deck.length)
-        let temp = deck[swapID]
-        deck[swapID] = deck[i]
-        deck[i] = temp
-    }
-}
+// function shuffle(deck) {
+//     for(let i = 0; i < deck.length; i++){
+//         let swapID = Math.trunc(Math.random() * deck.length)
+//         let temp = deck[swapID]
+//         deck[swapID] = deck[i]
+//         deck[i] = temp
+//     }
+// }
 
 function checkValue(cards){
     let total = 0
@@ -391,15 +397,14 @@ function checkGame(){
 }
 
 function deal(){
-    console.log('workinh')
-    deck = createDeck()
-    shuffle(deck)
     for(let i = 0; i < 2; i++){
         playersCards.push(drawCard())
-        dealersCards.pysh(drawCard())
+        dealersCards.push(drawCard())
     }
     playerValue = checkValue(playersCards)
     dealerValue = checkValue(dealersCards)
+    showDealerHand()
+    showPlayerHand()
     playing = true
     checkGame()
     dealButton.disabled = true
@@ -409,7 +414,7 @@ function deal(){
 
 function hit(){
     playersCards.push(drawCard())
-    playerValue = checkValue(playersCards)
+    showPlayerHand()
     if(playerValue > 21){
         playing = false
     }
@@ -426,4 +431,21 @@ function stand(){
     }
     playing = false
     checkGame()
+}
+
+
+function showDealerHand(){
+    for(let i = 0; i < dealersCards.length; i++){
+        const card = document.createElement('img')
+        card.src = dealersCards[i].cardFace
+        document.getElementById('dealer-hand').appendChild(card)
+    }
+}
+
+function showPlayerHand(){
+    for(let i = 0; i < playersCards.length; i++){
+        const card =  document.createElement('img')
+        card.src = playersCards[i].cardFace
+        document.getElementById('player-hand').appendChild(card)
+    }
 }
