@@ -376,7 +376,7 @@ function checkValue(cards){
 }
 
 function checkGame(){
-    if(playing  = false){
+    if(playing  === false){
         if(playerValue > 21){
             resultDiv.textContent = "you busted dealer wins"
         }else if(dealerValue > 21){
@@ -414,7 +414,10 @@ function deal(){
 
 function hit(){
     playersCards.push(drawCard())
+    clearHand('player-hand')
+    playerValue = checkValue(playersCards)
     showPlayerHand()
+    console.log(playerValue)
     if(playerValue > 21){
         playing = false
     }
@@ -424,7 +427,9 @@ function hit(){
 function stand(){
     while(dealerValue < 17 && (playing = true)){
         dealersCards.push(drawCard())
-        dealerValue = checkValue(dealersCards())
+        clearHand('dealer-hand')
+        dealerValue = checkValue(dealersCards)
+        showDealerHand()
         if(dealerValue > 21){
             playing =  false
         }
@@ -448,4 +453,8 @@ function showPlayerHand(){
         card.src = playersCards[i].cardFace
         document.getElementById('player-hand').appendChild(card)
     }
+}
+
+function clearHand(hand){
+    document.getElementById(hand).innerHTML = ''
 }

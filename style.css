@@ -1,0 +1,9 @@
+body{
+    text-align: center;
+    background-color: green;
+}
+#player-hand img, #dealer-hand img {
+    width: 250px;
+    height: 400px;
+    margin: 0, 10px;
+}
