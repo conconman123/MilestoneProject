@@ -391,14 +391,15 @@ function checkGame(){
         dealButton.disabled = false
         hitButton.disabled = true
         standButton.disabled = true
-        clearHand('player-hand')
-        clearHand('dealer-hand')
+        
     }else{
         resultDiv.textContent = ''
     }
 }
 
 function deal(){
+    clearHand('player-hand')
+    clearHand('dealer-hand')
     for(let i = 0; i < 2; i++){
         playersCards.push(drawCard())
         dealersCards.push(drawCard())
