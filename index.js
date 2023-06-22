@@ -391,6 +391,8 @@ function checkGame(){
         dealButton.disabled = false
         hitButton.disabled = true
         standButton.disabled = true
+        clearHand('player-hand')
+        clearHand('dealer-hand')
     }else{
         resultDiv.textContent = ''
     }
